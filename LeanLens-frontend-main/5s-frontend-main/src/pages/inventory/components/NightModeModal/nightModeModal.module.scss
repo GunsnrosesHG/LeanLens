@@ -1,0 +1,101 @@
+@import '../../../../styles/media.scss';
+@import '../../../../styles/fonts.scss';
+
+.modal {
+  max-width: 560px;
+  max-height: 470px;
+  padding: 20px;
+  justify-content: flex-start;
+
+  .header {
+    @include h1;
+    letter-spacing: 0.15px;
+    color: var(--HightEmphasis);
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+  .text {
+    @include h4;
+    letter-spacing: 0.15px;
+    color: var(--HightEmphasis);
+    margin-bottom: 10px;
+  }
+
+  .buttons {
+    position: absolute;
+    bottom: 20px;
+    display: flex;
+    align-self: flex-end;
+
+    .cancel {
+      background: transparent;
+      color: var(--Orange);
+    }
+  }
+
+  button:not(:first-child) {
+    margin-left: 20px;
+  }
+  .inputs {
+    display: flex;
+    min-width: 100%;
+    gap: 20px;
+    &__left {
+      width: 50%;
+    }
+    &__right {
+      width: 50%;
+    }
+    .input {
+      margin-top: 6px;
+      width: 100%;
+      padding: 8px 16px;
+      border: 1px solid #9e9e9e;
+      border-radius: 4px;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+      &:focus {
+        border-color: #212121;
+        outline: none;
+      }
+    }
+  }
+}
+
+.closeCross {
+  font-size: 20px;
+  transition: all 0.4s;
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+.tooltip {
+  position: absolute;
+  top: 120px;
+  left: 128px;
+  background: #ffffff;
+  box-shadow: 0px 0px 8px rgba(42, 98, 149, 0.25);
+  border-radius: 4px;
+  padding: 10px;
+  z-index: 100;
+  h6 {
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 150%;
+    color: #666666;
+  }
+  p {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+  }
+}
+.tooltipSVG {
+  fill: #666666;
+  cursor: pointer;
+}

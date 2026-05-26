@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: onviffinder
+  labels:
+    deployment: onviffinder
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      pod: onviffinder
+  template:
+    metadata:
+      labels:
+        pod: onviffinder
+    spec:
+      hostNetwork: true
+      containers:
+        - name: onviffinder
+          image: 5scontrol/onviffinder:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 7654
+              hostPort: 7654
+              protocol: TCP
+      nodeSelector:
+        specialnode: "main"
+      restartPolicy: Always

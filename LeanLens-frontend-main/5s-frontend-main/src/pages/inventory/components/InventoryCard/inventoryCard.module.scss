@@ -1,0 +1,51 @@
+@import '../../../../styles/media.scss';
+@import '../../../../styles/fonts.scss';
+
+.cover {
+  width: 100%;
+  box-shadow: none ;
+  padding: 0;
+  border-radius: 0;
+  border-bottom: 1px solid #c5c5c5;
+  margin-bottom: 5px;
+  .header {
+    @include h3;
+    color: var(--TotalBlack);
+  }
+
+  .stockData {
+    display: flex;
+    align-items: baseline;
+    &_value {
+      @include h1;
+    }
+
+    .stockIn {
+      color: var(--Green);
+    }
+
+    .low {
+      color: var(--StockOrange);
+    }
+
+    .out {
+      color: var(--StockRed);
+    }
+
+    &_description {
+      margin-left: 12px;
+    }
+
+    .statusStock {
+      color: var(--Green);
+    }
+
+    .statusLowStock {
+      color: var(--StockOrange);
+    }
+
+    .statusOutStock {
+      color: var(--StockRed);
+    }
+  }
+}

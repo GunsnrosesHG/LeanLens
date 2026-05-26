@@ -1,0 +1,382 @@
+{
+  "employee": "Employee",
+  "order": "Order",
+  "operation": "Operation",
+  "timespan": "Timespan",
+  "lang": "en",
+  "menu": {
+    "ordersView": "Orders View",
+    "configuration": "Configuration",
+    "dataConfiguration": "Data configuration",
+    "directories": "Directories",
+    "generalDirectories": "General directories",
+    "accountSettings": "Account settings",
+    "orders": "Orders",
+    "reports": "Reports",
+    "scanner": "QR Scanner",
+    "scanQR": "Scan QR",
+    "language": "Interface language",
+    "users": "Employees",
+    "cameras": "Camera settings",
+    "myTasks": "My tasks",
+    "workTimeEnded": "Work time has ended",
+    "employeeTasksStatus": "Active employee tasks",
+    "viewTimespan": "View Timespan",
+    "loading": "Loading",
+    "workStatus": {
+      "workInProgress": "Work in progress",
+      "noWork": "No work"
+    }
+    
+  },
+  "config": {
+    "title": "Configuration",
+    "erp": "ERP Connections"
+  },
+  "messages": {
+    "noData": "No data found",
+    "loading": "Loading",
+    "noDatabases": "No databases available",
+    "noReports": "Unable to find the requested report",
+    "noCameras": "Unable to find cameras for this operation",
+    "used": "Used in Orders View",
+    "connected": "Connected",
+    "disconnected": "Disconnected",
+    "unableToSave": "Unable to save",
+    "disconectFromERP": "Disconnect from ERP?",
+    "disconectDescription": "Disconnecting from database will result in inability to view orders in Orders View.",
+    "incorrectCredentials": "Incorrect email or password. Please, try again.",
+    "orderName": "Create order name and try again",
+    "validDate": "Please set a valid start date.",
+    "startTime": "The start time cannot be later than the end time",
+    "finishDate": "The end time cannot be earlier than the start time",
+    "timespanLimit": "Time cannot be from the future.",
+    "saveData": "Please save your data!",
+    "employeeNotFound": "Employee not found",
+    "validLength": "Maximum text length reached",
+    "employeeExists": "An employee with the same name or email already exists",
+    "successFinish": "Timespan successfully finished"
+  },
+  "directory": {
+    "newDirectory": "New directory",
+    "newEntry": "New entry in",
+    "edit": "Edit",
+    "card": "Card",
+    "name": "Name",
+    "operations": {
+      "title": "Operations",
+      "name": "Operation name",
+      "newOperation": "Add an operation",
+      "edit": "Edit operation",
+      "estimatedTime": "Estimated Time"
+    },
+    "items": {
+      "title": "Items",
+      "name": "Item name",
+      "newItem": "Add item",
+      "edit": "Edit item"
+    },
+    "employees": {
+      "title": "Employees",
+      "newEmployee": "New employee"
+    }
+  },
+  "timeUnit": {
+    "title": "Time Unit",
+    "hours": "Hours",
+    "minutes": "Minutes",
+    "selectTimeUnit": "Select Time Unit"
+  },
+  "text": {
+    "connection": "connection",
+    "select": "Select",
+    "usedInOrdersView": "Used in Orders View",
+    "connected": "Connected",
+    "database": "Database",
+    "no": "No",
+    "added": "you've added will appear here.",
+    "new": "New",
+    "time": "Planned Time",
+    "name": "name",
+    "ordersView": "Orders View",
+    "products": "Products",
+    "tasks": "Tasks",
+    "scheduled": "Show scheduled time",
+    "startTime": "Start time",
+    "datePlaceholder": "Select Date and Start Time",
+    "logout": "Log out",
+    "norecords": "No records",
+    "noOperations": "No operations",
+    "finishedIn": "Finished in",
+    "startOfOperation": "Start of operation",
+    "endOfOperation": "End of operation",
+    "startNewOperation": "Start new operation"
+  },
+  "operations": {
+    "add": "Add",
+    "save": "Save",
+    "edit": "Edit",
+    "disconect": "Disconnect",
+    "cancel": "Cancel",
+    "search": "Search",
+    "done": "Done",
+    "delete": "Delete",
+    "submit": "Submit",
+    "start": "Start",
+    "finish": "Finish",
+    "saveChanges": "Save changes",
+    "download": "Download",
+    "downloadReport": "Download report",
+    "share": "Share",
+    "print": "Print",
+    "dismiss": "Dismiss",
+    "operations": {
+      "search": "Find operation"
+    },
+    "items": {
+      "search": "Find item"
+    },
+    "tasks": {
+        "search": "Find task"
+    },
+    "orders": {
+      "search": "Find order"
+    },
+    "directories": {
+      "search": "Find directory",
+      "add": "Add directory",
+      "edit": "Edit directory"
+    },
+    "users": {
+      "delete": "Are you sure you want to delete the employee",
+      "edit": "Edit employee",
+      "add": "Add employee",
+      "search": "Find an employee"
+    }
+  },
+  "db": {
+    "products": {
+      "button": "",
+      "title": "Products",
+      "singular": "product"
+    },
+    "productsCategory": {
+      "button": "Products",
+      "title": "Product categories",
+      "singular": "product category"
+    },
+    "operations": {
+      "button": "Operations",
+      "title": "Operations",
+      "singular": "operation"
+    },
+    "employes": {
+      "button": "Employees",
+      "title": "Employees",
+      "singular": "employee"
+    },
+    "equipment": {
+      "button": "Equipment",
+      "title": "Equipment",
+      "singular": "equipment"
+    }
+  },
+  "newConnection": {
+    "title": "New connection",
+    "system": "ERP system",
+    "domain": "Domain",
+    "name": "Name",
+    "pwd": "Password",
+    "status": "Status"
+  },
+  "form": {
+    "name": "Name",
+    "date": "Date",
+    "operationDate": "Operation date",
+    "duration": "Duration",
+    "namePlaceholder": "Enter a name",
+    "selectOperation": "Select Operation",
+    "selectOrderItem": "Select Order Item",
+    "auth": {
+      "signin": "Sign in to",
+      "login": "Username",
+      "loginPlaceholder": "Enter Username",
+      "pwdPlaceholder": "Enter Password",
+      "pwd": "Password",
+      "submit": "Log In",
+      "continue": "Continue",
+      "back": "Back",
+      "requestCodeAgain": "Request code again",
+      "forgotPassword": "Forgot your password?",
+      "enterEmail": "Please enter your Email Address to receive a Verification Code!",
+      "enterCode": "Please enter the 6-digit Code!",
+      "requestANewCodeIn": "Request a new code in",
+      "enterPassword": "Enter a new password for your account!",
+      "successful": "Successful!",
+      "passwordChanged": "Congratulations! Your password has been changed. Click Continue to log in",
+      "emailNotFound": "User with this email address is not found",
+      "invalidCode": "Invalid code",
+      "failedUpdatePassword": "Failed to update password"
+    },
+    "required": "This field is required",
+    "passwordLength": "Password length must be at least 4 characters",
+    "selectWorkplace": "Select employee's workplace",
+    "invalidCharacters": "Invalid characters",
+    "passwordsNotEqual": "Passwords don't match",
+    "enterPassword": "Enter password",
+    "repeatPassword": "Repeat the password",
+    "invalidEmail": "Invalid email format"
+  },
+  "orders": {
+    "order": "Order",
+    "orders": "Orders",
+    "newOrder": "New order",
+    "newOperations": "New operations",
+    "operations": "Operations",
+    "operation": "Operation",
+    "parts": "Parts",
+    "place": "Place",
+    "equipment": "Equipment",
+    "implementation": "Implementation",
+    "nameparts": "Name parts",
+    "namepPlace": "Name place",
+    "nameEquipment": "Name equipment",
+    "number": "N",
+    "name": "Name",
+    "status": "Status",
+    "implementationTime": "Implementation time",
+    "startOperation": "Start",
+    "operationTime": "Operation time:",
+    "timeOverlap": "Choose another time",
+    "finishOperation": "Finish",
+    "date": "Date",
+    "orderItems": "Order items",
+    "orderItem": "Order item",
+    "suffix": "Suffix",
+    "id": "Id",
+    "worker": "Worker",
+    "orderName": "Order name",
+    "orderNumber": "Order number",
+    "orderYear": "Order year",
+    "startedAt": "Start of work",
+    "estimatedAt": "Deadline",
+    "completedAt": "End of work",
+    "deadlineExpired": "The deadline has expired",
+    "deadlineExpiredWeeks": "The deadline expired more than 2 weeks ago",
+    "deadlineExpiredMonth": "The deadline expired more than a month ago",
+    "deadlineExpiredMonths": "The deadline expired more than 2 months ago",
+    "statusValues": {
+      "pending": "Not started",
+      "inProgress": "In progress",
+      "done": "Done"
+    },
+    "assembly": "Assembly",
+    "blank": "Blank",
+    "time": "Time",
+    "surname": "Surname",
+    "finishOrder": "Finish order",
+    "orderExist": "Order already exists"
+  },
+  "time": {
+    "day": "d",
+    "week": "w",
+    "hour": "h",
+    "min": "min"
+  },
+  "reports": {
+    "report": "Report",
+    "fullReport": "Full report",
+    "individualReports": "Individual reports",
+    "orderDetails": "Order details",
+    "startDate": "Report start date",
+    "endDate": "Report end date"
+  },
+  "ordersView": {
+    "orderSearch": "Order search",
+    "settings": "Settings",
+    "workday": "Work day",
+    "erp": "Used ERP",
+    "displayedOperations": "Displayed operations"
+  },
+  "users": {
+    "username": "Login",
+    "fullName": "Full name",
+    "firstName": "Employee's first name",
+    "lastName": "Employee's last name",
+    "password": "Password",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm password",
+    "role": "Employee role",
+    "workplace": "Workplace",
+    "dateJoined": "Date joined",
+    "settings": "Employee settings",
+    "info": "Employee information",
+    "workStartTime":  "Work start time",
+    "workEndTime": "Work end time",
+    "timeNotSet": "Time not set"
+  },
+  "scanner": {
+    "start": "Start scanning",
+    "stop": "End scanning"
+  },
+  "workplace": {
+    "assign": "Assign workplace"
+  },
+  "camera": {
+    "title": "Camera",
+    "plural": "Cameras",
+    "configuration": "Configuration",
+    "monitoring": "Connecting to cameras on a local network for continuous monitoring.",
+    "name": "Name",
+    "algorithms": "Algorithms",
+    "ip": "IP",
+    "saved": "Camera is saved",
+    "removeQuestion": "Remove a camera?",
+    "zone": "Zone",
+    "zones": "Zones",
+    "workplace":"Workplace",
+    "cameraSegment": {
+      "connection": "Connection",
+      "cameraIp": "Camera IP",
+      "select": "Select or enter",
+      "username":"Username",
+      "usernameTooltip": "The IP cameras username is often a default value set by the manufacturer, such as 'admin' or 'root'. You can usually find this information in the devices user manual or on the manufacturers website.",
+      "password": "Password",
+      "passwordTooltip": "The IP cameras password is typically set by the user during the initial setup process. If you have forgotten the password, you may be able to reset it by pressing and holding the reset button on the camera for a few seconds. However, this will also reset any other settings on the camera to their default values.",
+      "settings": "System settings",
+      "displayedName": "Displayed name (optional)",
+      "testConnection": "Test connection",
+      "testTip": "Test connection after selecting a camera and filling in its' username and password.",
+      "status": {
+        "connected": "Connected to the camera",
+        "failed": "Failed to connect to the camera"
+      }
+    },
+    "zoneSegment": {  
+      "messages": {
+        "deleted": "Zone was deleted",
+        "notDeleted": "Zone was not deleted",
+        "select": "Select zone",
+        "saved": "Zone is saved",
+        "notSaved": "Zone is not saved. Try again",
+        "overlap": "Zones must not overlap",
+        "selectWorkplace": "Choose workplace",
+        "duplicateName": "Zone names cannot be duplicated"
+      },
+      "notConnected": "Not connected to the camera. Check your connection in 'Camera' tab.",
+      "namePlaceholder": "Enter zone name",
+      "select": "Select or enter",
+      "selectAreas": "Select one or more areas on the left",
+      "add": "Add Zone"
+    }
+  },
+  "timespans":{
+    "inProcess": "In progress",
+    "done": "Done",
+    "notFound":
+    {
+      "inProcess": "There are no current tasks!",
+      "done": "There are no completed tasks!"
+    }
+  }
+}

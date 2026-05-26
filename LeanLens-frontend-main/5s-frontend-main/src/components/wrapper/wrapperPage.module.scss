@@ -1,0 +1,17 @@
+@import 'src/styles/media.scss';
+@import 'src/styles/fonts.scss';
+
+.wrapper {
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-bottom: 20px;
+  &_title {
+    @include h1;
+    color: var(--HightEmphasis);
+  }
+}

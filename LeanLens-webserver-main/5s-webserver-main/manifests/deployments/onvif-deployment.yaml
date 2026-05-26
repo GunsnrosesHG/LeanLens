@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: onvif
+  labels:
+    deployment: onvif
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      pod: onvif
+  template:
+    metadata:
+      labels:
+        pod: onvif
+    spec:
+      hostNetwork: true
+      containers:
+        - name: onvif
+          image: 5scontrol/onvif:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: images
+              mountPath: /var/www/5scontrol/images
+            - name: videos
+              mountPath: /var/www/5scontrol/videos
+            - name: db
+              mountPath: /var/www/5scontrol/database
+          ports:
+            - containerPort: 3456
+              hostPort: 3456
+              protocol: TCP
+          env:
+            - name: DJANGO_SERVICE_URL
+              value: "localhost"
+      nodeSelector:
+        specialnode: "main"
+      restartPolicy: Always
+      volumes:
+        - name: images
+          persistentVolumeClaim:
+            claimName: images
+        - name: videos
+          persistentVolumeClaim:
+            claimName: videos
+        - name: db
+          persistentVolumeClaim:
+            claimName: db

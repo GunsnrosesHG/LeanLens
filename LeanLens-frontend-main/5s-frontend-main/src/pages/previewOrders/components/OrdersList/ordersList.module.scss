@@ -1,0 +1,48 @@
+@import 'src/styles/fonts';
+
+.wrapper {
+  max-width: 350px;
+  padding: 0;
+}
+
+.header {
+  margin: 10px 10px 0 10px;
+  &_title {
+    @include h3;
+    letter-spacing: 0.03em;
+    margin-bottom: 20px;
+  }
+  &_listInput {
+    margin-top: 10px;
+  }
+}
+
+.list {
+  height: calc(100vh - 310px);
+  margin-top: 20px;
+  margin-left: 10px;
+  margin-right: 4px;
+  overflow-y: scroll;
+  &_empty {
+    @include body1;
+    color: var(--HightEmphasis);
+    letter-spacing: 0.15px;
+  }
+  &_paginations {
+    height: calc(100vh - 107px);
+  }
+}
+
+.list::-webkit-scrollbar {
+  width: 8px;
+  background-color: inherit;
+}
+
+.list::-webkit-scrollbar-thumb {
+  background: var(--Gray88);
+  border-radius: 20px;
+}
+
+.list::-webkit-scrollbar-track {
+  background-color: inherit;
+}

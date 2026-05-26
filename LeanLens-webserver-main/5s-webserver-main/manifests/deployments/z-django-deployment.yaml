@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django
+  labels:
+    deployment: django
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      pod: django
+  template:
+    metadata:
+      labels:
+        pod: django
+    spec:
+      containers:
+        - name: django
+          image: 5scontrol/django:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: images
+              mountPath: /usr/src/app/images
+            - name: videos
+              mountPath: /usr/src/app/videos
+            - name: db
+              mountPath: /usr/src/app/database
+          ports:
+            - containerPort: 8000
+              hostPort: 8000
+              protocol: TCP
+          env:
+            - name: REDIS_HOST
+              value: redis-service
+            - name: DB_HOST
+              value: pgservice
+            - name: ONVIF_SERVICE_URL
+              value: onvif-service
+            - name: ONVIFFINDER_SERVICE_URL
+              value: onviffinder-service
+            - name: ALGORITHMS_CONTROLLER_SERVICE_URL
+              value: algorithms-controller-service
+            - name: DJANGO_SERVICE_URL
+              value: django-service
+            - name: DB_PORT
+              value: '5432'
+            - name: DEBUG
+              value: "False"
+            - name: EMULATE_DB
+              value: "True"
+            - name: SECRET_KEY
+              value: 0123456789abcdef0123456789abcdef
+            - name: LICENSE_ACTIVE
+              value: 'True'
+            - name: DB_ENGINE
+              value: 'django.db.backends.postgresql'
+            - name: DB_NAME
+              value: 'fiveScontrol'
+            - name: DB_USER
+              value: 'admin'
+            - name: DB_PASSWORD
+              value: 'just4Taqtile'
+            - name: TEST_DB_NAME
+              value: 'test_database'
+            - name: TEST_DB_PORT
+              value: '5433'
+            - name: NGROK_URL
+              value: https://grand-alien-apparently.ngrok-free.app/
+      nodeSelector:
+        specialnode: "main"
+      restartPolicy: Always
+      volumes:
+        - name: images
+          persistentVolumeClaim:
+            claimName: images
+        - name: videos
+          persistentVolumeClaim:
+            claimName: videos
+        - name: db
+          persistentVolumeClaim:
+            claimName: db

@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pg
+  labels:
+    deployment: pg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      pod: pg
+  template:
+    metadata:
+      labels:
+        pod: pg
+    spec:
+      containers:
+        - name: pg
+          image: postgres:15
+          volumeMounts:
+            - name: pg
+              mountPath: /var/lib/postgresql/data
+          ports:
+            - containerPort: 5432
+              hostPort: 5432
+              protocol: TCP
+          env:
+            - name: POSTGRES_DB
+              value: fiveScontrol
+            - name: POSTGRES_PASSWORD
+              value: just4Taqtile
+            - name: POSTGRES_USER
+              value: admin
+      nodeSelector:
+        specialnode: "main"
+      restartPolicy: Always
+      volumes:
+        - name: pg
+          persistentVolumeClaim:
+            claimName: pg

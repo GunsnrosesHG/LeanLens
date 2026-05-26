@@ -1,0 +1,66 @@
+@import '../../styles/media.scss';
+@import '../../styles/fonts.scss';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+
+  .required_label {
+    content: '*';
+    color: var(--Orange);
+  }
+}
+
+.label {
+  @include body1;
+  color: var(--HightEmphasis);
+  margin-bottom: 6px;
+}
+
+.block {
+  position: relative;
+  &__input {
+    width: 100%;
+    max-height: 50px;
+    border: 1px solid var(--LowEmphasis);
+    border-radius: 4px;
+    @include body1;
+    color: var(--HightEmphasis);
+    padding: 13px 16px;
+    &:focus {
+      border-color: #212121;
+      outline: none;
+    }
+  }
+  &__eye {
+    cursor: pointer;
+    position: absolute;
+    top: calc(50% - 12.5px);
+    right: 12px;
+    width: 25px;
+    height: 25px;
+    color: var(--MediumEmphasis);
+    &:hover {
+      color: var(--HightEmphasis);
+    }
+  }
+  &__search {
+    position: absolute;
+    right: 0px;
+  }
+  &__error {
+    border: 1px solid var(--Red) !important;
+  }
+  &__error::placeholder {
+    color: var(--Red);
+  }
+  &__error_message {
+    position: absolute;
+    bottom: -24px;
+    left: 0;
+    @include caption;
+    color: var(--Red);
+  }
+}

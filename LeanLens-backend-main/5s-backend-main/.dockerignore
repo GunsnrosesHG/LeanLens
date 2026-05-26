@@ -1,0 +1,6 @@
+venv/
+env/
+dumps/
+.github/
+.git/
+.gitignore

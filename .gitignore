@@ -1,0 +1,39 @@
+# Archive duplicates of extracted source trees
+*.zip
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node
+node_modules/
+dist/
+build/
+.next/
+.nuxt/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs and local data
+*.log
+logs/

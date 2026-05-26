@@ -1,0 +1,91 @@
+@import 'src/styles/media.scss';
+@import 'src/styles/fonts.scss';
+
+.modal {
+  max-width: 880px;
+  max-height: 850px;
+  height: max-content;
+  overflow: hidden;
+  position: relative;
+  background-color: #ffffff;
+  z-index: 2;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  left: 0;
+  background: #ffffff;
+  z-index: 2;
+  padding: 20px;
+  &_title {
+    @include h2;
+    color: var(--HightEmphasis);
+  }
+}
+
+.form {
+  padding: 20px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  &_wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, auto);
+    gap: 10px;
+    padding-bottom: 40px;
+  }
+  &_error {
+    color: var(--Red);
+  }
+  .buttons {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    gap: 10px;
+    .cancel {
+      background-color: #ffffff;
+      color: #fe6100;
+      &:hover {
+        background-color: #fe6100;
+        color: #ffffff;
+      }
+    }
+  }
+}
+.close {
+  color: var(--HightEmphasis);
+  cursor: pointer;
+  z-index: 1;
+  transition: all 0.4s;
+  &:hover {
+    color: var(--MediumEmphasis);
+  }
+}
+.inputContainer {
+  grid-column: span 2;
+}
+.inputFull {
+  grid-column: 1 / span 2;
+}
+
+.container {
+  padding: 0 20px 0 20px;
+}
+.buttonsNew {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 50px;
+  padding: 20px;
+  gap: 10px;
+}
+.label {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 150% */
+  margin-bottom: 5px;
+}

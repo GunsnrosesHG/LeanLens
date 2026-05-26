@@ -1,0 +1,382 @@
+{
+  "employee": "Pracownik",
+  "order": "Zamówienie",
+  "operation": "Operacja",
+  "timespan": "Czas pracy",
+  "lang": "pl",
+  "menu": {
+    "ordersView": "Widok zamówień",
+    "configuration": "Konfiguracja",
+    "dataConfiguration": "Konfiguracja danych",
+    "directories": "Katalogi",
+    "generalDirectories": "Ogólne katalogi",
+    "accountSettings": "Ustawienia konta",
+    "orders": "Zamówienia",
+    "reports": "Raporty",
+    "scanner": "Skaner QR",
+    "scanQR": "Skanuj QR",
+    "language": "Język interfejsu",
+    "users": "Pracownicy",
+    "cameras": "Ustawienia kamer",
+    "myTasks": "Moje zadania",
+    "workTimeEnded": "Czas pracy dobiegł końca",
+    "employeeTasksStatus": "Aktywne zadania pracowników",
+    "viewTimespan": "Zobacz Czas Operacji",
+    "loading": "Ładowanie",
+    "workStatus": {
+      "workInProgress": "Prace w toku",
+      "noWork": "Brak pracy"
+    }
+  },
+  "config": {
+    "title": "Konfiguracja",
+    "erp": "Połączenia ERP"
+  },
+  "messages": {
+    "noData": "Nie znaleziono danych",
+    "loading": "Ładowanie",
+    "noDatabases": "Brak dostępnych baz danych",
+    "noReports": "Nie można znaleźć żądanego raportu",
+    "noCameras": "Nie można znaleźć kamer dla tej operacji",
+    "used": "Używane w widoku zamówień",
+    "connected": "Połączono",
+    "disconnected": "Rozłączono",
+    "unableToSave": "Nie można zapisać",
+    "disconectFromERP": "Odłączyć od ERP?",
+    "disconectDescription": "Odłączenie od bazy danych uniemożliwi przeglądanie zamówień w widoku zamówień.",
+    "incorrectCredentials": "Nieprawidłowy email lub hasło. Spróbuj ponownie.",
+    "orderName": "Utwórz nazwę zamówienia i spróbuj ponownie",
+    "validDate": "Proszę ustawić poprawną datę początkową.",
+    "startTime": "Czas rozpoczęcia nie może być późniejsza niż czas zakończenia",
+    "finishDate": "Czas zakończenia nie może być wcześniejszy niż czas rozpoczęcia",
+    "timespanLimit": "Czas nie może pochodzić z przyszłości.",
+    "saveData": "Proszę zapisać swoje dane!",
+    "employeeNotFound": "Pracownik nie został znaleziony",
+    "validLength": "Osiągnięto maksymalną długość tekstu",
+    "employeeExists": "Pracownik o tym samym nazwisku lub adresie e-mail już istnieje",
+    "successFinish": "Czas został pomyślnie zakończony"
+  },
+  "directory": {
+    "newDirectory": "Nowy katalog",
+    "newEntry": "Nowy wpis w",
+    "edit": "Edytuj",
+    "card": "Karta",
+    "name": "Nazwa",
+    "operations": {
+      "title": "Operacje",
+      "name": "Nazwa operacji",
+      "newOperation": "Dodaj operację",
+      "edit": "Edytuj operację",
+      "estimatedTime": "Szacowany czas"
+    },
+    "items": {
+      "title": "Przedmioty",
+      "name": "Nazwa przedmiotu",
+      "newItem": "Dodaj przedmiot",
+      "edit": "Edytuj przedmiot"
+    },
+    "employees": {
+      "title": "Pracownicy",
+      "newEmployee": "Nowy pracownik"
+    }
+  },
+  "timeUnit": {
+    "title": "Jednostka czasu",
+    "hours": "Godziny",
+    "minutes": "Minuty",
+    "selectTimeUnit": "Wybierz jednostkę czasu"
+  },
+  "text": {
+    "connection": "połączenie",
+    "select": "Wybierz",
+    "usedInOrdersView": "Używane w widoku zamówień",
+    "connected": "Połączono",
+    "database": "Baza danych",
+    "no": "Nie",
+    "added": "dodane przez ciebie pojawi się tutaj.",
+    "new": "Nowy",
+    "time": "Planowany czas",
+    "name": "nazwa",
+    "ordersView": "Widok zamówień",
+    "products": "Produkty",
+    "tasks": "Zadania",
+    "scheduled": "Pokaż zaplanowany czas",
+    "startTime": "Czas rozpoczęcia",
+    "datePlaceholder": "Wybierz datę i czas rozpoczęcia",
+    "logout": "Wyloguj się",
+    "norecords": "Brak rekordów",
+    "noOperations": "Brak operacji",
+    "finishedIn": "Zakończono w",
+    "startOfOperation": "Początek operacji",
+    "endOfOperation": "Koniec operacji",
+    "startNewOperation": "Rozpocznij nową operację"
+  },
+  "operations": {
+    "add": "Dodaj",
+    "save": "Zapisz",
+    "edit": "Edytuj",
+    "disconect": "Rozłącz",
+    "cancel": "Anuluj",
+    "search": "Szukaj",
+    "done": "Gotowe",
+    "delete": "Usuń",
+    "submit": "Zatwierdź",
+    "start": "Start",
+    "finish": "Zakończ",
+    "saveChanges": "Zapisz zmiany",
+    "download": "Pobierz",
+    "downloadReport": "Pobierz raport",
+    "share": "Udostępnij",
+    "print": "Drukuj",
+    "dismiss": "Zamknij",
+    "operations": {
+        "search": "Znajdź operację"
+    },
+    "items": {
+        "search": "Znajdź przedmiot"
+    },
+    "tasks": {
+      "search": "Znajdź zadanie"
+    },
+    "orders": {
+      "search": "Znajdź zamówienie"
+    },
+    "directories": {
+      "search": "Znajdź katalog",
+      "add": "Dodaj katalog",
+      "edit": "Edytować katalog"
+    },
+    "users": {
+      "delete": "Czy jesteś pewien, że chcesz usunąć pracownika",
+      "edit": "Edytować pracownika",
+      "add": "Dodaj pracownika",
+      "search": "Znajdź pracownika"
+    }
+    
+  },
+  "db": {
+    "products": {
+      "button": "",
+      "title": "Produkty",
+      "singular": "produkt"
+    },
+    "productsCategory": {
+      "button": "Produkty",
+      "title": "Kategorie produktów",
+      "singular": "kategoria produktu"
+    },
+    "operations": {
+      "button": "Operacje",
+      "title": "Operacje",
+      "singular": "operacja"
+    },
+    "employes": {
+      "button": "Pracownicy",
+      "title": "Pracownicy",
+      "singular": "pracownik"
+    },
+    "equipment": {
+      "button": "Sprzęt",
+      "title": "Sprzęt",
+      "singular": "sprzęt"
+    }
+  },
+  "newConnection": {
+    "title": "Nowe połączenie",
+    "system": "System ERP",
+    "domain": "Domena",
+    "name": "Nazwa",
+    "pwd": "Hasło",
+    "status": "Status"
+  },
+  "form": {
+    "name": "Nazwa",
+    "date": "Data",
+    "operationDate": "Data operacji",
+    "duration": "Czas trwania",
+    "namePlaceholder": "Wpisz nazwę",
+    "selectOperation": "Wybierz operację",
+    "selectOrderItem": "Wybierz węzeł",
+    "auth": {
+      "signin": "Zaloguj się do",
+      "login": "Nazwa użytkownika",
+      "loginPlaceholder": "Wprowadź nazwę użytkownika",
+      "pwdPlaceholder": "Wprowadź hasło",
+      "pwd": "Hasło",
+      "submit": "Zaloguj się",
+      "continue": "Kontynuować",
+      "back": "Z powrotem",
+      "requestCodeAgain": "Poproś o kod ponownie",
+      "forgotPassword": "Zapomniałeś hasła?",
+      "enterEmail": "Podaj swój adres e-mail, aby otrzymać kod weryfikacyjny!",
+      "enterCode": "Proszę wprowadzić 6-cyfrowy kod!",
+      "requestANewCodeIn": "Poproś o nowy kod poprzez",
+      "enterPassword": "Wprowadź nowe hasło do swojego konta!",
+      "successful": "Udany!",
+      "passwordChanged": "Gratulacje! Twoje hasło zostało zmienione. Kliknij Kontynuować, aby się zalogować",
+      "emailNotFound": "Nie znaleziono użytkownika o tym adresie e-mail",
+      "invalidCode": "Nieprawidłowy kod",
+      "failedUpdatePassword": "Nie udało się zaktualizować hasła"
+    },
+    "required": "To pole jest wymagane",
+    "passwordLength": "Hasło musi mieć co najmniej 4 znaki",
+    "selectWorkplace": "Wybierz miejsce pracy",
+    "invalidCharacters": "Nieprawidłowe znaki",
+    "passwordsNotEqual": "Hasła nie pasują",
+    "enterPassword": "Wprowadź hasło",
+    "repeatPassword": "Powtórz hasło",
+    "invalidEmail": "Nieprawidłowy format wiadomości email"
+  },
+  "orders": {
+    "order": "Zamówienie",
+    "orders": "Zamówienia",
+    "newOrder": "Nowe zamówienie",
+    "newOperations": "Nowe operacje",
+    "operations": "Operacje",
+    "operation": "Operacja",
+    "parts": "Części",
+    "place": "Miejsce",
+    "equipment": "Sprzęt",
+    "implementation": "Realizacja",
+    "nameparts": "Nazwa części",
+    "namepPlace": "Nazwa miejsca",
+    "nameEquipment": "Nazwa sprzętu",
+    "number": "N",
+    "name": "Nazwa",
+    "status": "Status",
+    "implementationTime": "Czas realizacji",
+    "startOperation": "Początek",
+    "operationTime": "Czas operacji:",
+    "timeOverlap": "Wybierz inny czas",
+    "finishOperation": "Koniec",
+    "date": "Data",
+    "orderItems": "Węzły",
+    "orderItem": "Węzeł",
+    "suffix": "Przyrostek",
+    "id": "Id",
+    "worker": "Pracownik",
+    "orderName": "Nazwa zamówienia",
+    "orderNumber": "Numer zamówienia",
+    "orderYear": "Rok zamówienia",
+    "startedAt": "Rozpoczęcie pracy",
+    "estimatedAt": "Termin",
+    "completedAt": "Koniec pracy",
+    "deadlineExpired": "Termin upłynął",
+    "deadlineExpiredWeeks": "Termin minął ponad 2 tygodnie temu",
+    "deadlineExpiredMonth": "Termin minął ponad miesiąc temu",
+    "deadlineExpiredMonths": "Termin minął ponad 2 miesiące temu",
+    "statusValues": {
+      "pending": "Nie rozpoczęty",
+      "inProgress": "W trakcie",
+      "done": "Zakończony"
+    },
+    "assembly": "Zespół",
+    "blank": "Szablon",
+    "time": "Сzas",
+    "surname": "Nazwisko",
+    "finishOrder": "Zakończ zamówienie",
+    "orderExist": "To zamówienie już istnieje"
+  },
+  "time": {
+    "day": "dz",
+    "week": "tydz",
+    "hour": "godz",
+    "min": "min"
+  },
+  "reports": {
+    "report": "Raport",
+    "fullReport": "Pełny raport",
+    "individualReports": "Indywidualne raporty",
+    "orderDetails": "Szczegóły zamówienia",
+    "startDate": "Data rozpoczęcia raportu",
+    "endDate": "Data zakończenia raportu"
+  },
+  "ordersView": {
+    "orderSearch": "Wyszukiwanie zamówienia",
+    "settings": "Ustawienia",
+    "workday": "Dzień roboczy",
+    "erp": "Używane ERP",
+    "displayedOperations": "Wyświetlane operacje"
+  },
+  "users": {
+    "username": "Zaloguj się przy logowaniu",
+    "fullName": "Nazwisko Imię",
+    "firstName": "Imię pracownika",
+    "lastName": "Nazwisko pracownika",
+    "password": "Hasło",
+    "newPassword": "Nowe hasło",
+    "confirmPassword": "Potwierdź hasło",
+    "role": "Rola pracownika",
+    "workplace": "Miejsce pracy",
+    "dateJoined": "Data dołączenia",
+    "settings": "Ustawienia pracownika",
+    "info": "Informacje o pracowniku",
+    "workStartTime": "Czas rozpoczęcia pracy",
+    "workEndTime": "Czas zakończenia pracy",
+    "timeNotSet": "Czas nie ustawiony"
+  },
+  "scanner": {
+    "start": "Rozpocznij skanowanie",
+    "stop": "Zakończ skanowanie"
+  },
+  "workplace": {
+    "assign": "Przydziel miejsce pracy"
+  },
+  "camera": {
+    "title": "Kamera",
+    "plural": "Kamery",
+    "configuration": "Konfiguracja",
+    "monitoring": "Połączenie z kamerami w sieci lokalnej w celu ciągłego monitorowania.",
+    "name": "Nazwa",
+    "algorithms": "Algorytmy",
+    "ip": "IP",
+    "saved": "Kamera została zapisana",
+    "removeQuestion": "Czy na pewno chcesz usunąć kamerę?",
+    "zone": "Strefa",
+    "zones": "Strefy",
+    "workplace": "Stanowisko pracy",
+    "cameraSegment": {
+      "connection": "Połączenie",
+      "cameraIp": "Adres IP kamery",
+      "select": "Wybierz lub wprowadź",
+      "username": "Nazwa użytkownika",
+      "usernameTooltip": "Nazwa użytkownika kamery IP jest często ustawiona domyślnie przez producenta, na przykład „admin” lub „root”. Informacje te można zwykle znaleźć w instrukcji obsługi urządzenia lub na stronie producenta.",
+      "password": "Hasło",
+      "passwordTooltip": "Hasło do kamery IP jest zazwyczaj ustawiane przez użytkownika podczas początkowej konfiguracji. Jeśli zapomnisz hasła, możesz je zresetować, naciskając i przytrzymując przez kilka sekund przycisk resetowania na kamerze. Należy jednak pamiętać, że wszystkie inne ustawienia kamery zostaną przywrócone do wartości domyślnych.",
+      "settings": "Ustawienia systemowe",
+      "displayedName": "Wyświetlana nazwa (opcjonalnie)",
+      "testConnection": "Test połączenia",
+      "testTip": "Sprawdź połączenie, wybierając kamerę i wprowadzając jej nazwę użytkownika i hasło.",
+      "status": {
+        "connected": "Połączenie zostało nawiązane",
+        "failed": "Błąd połączenia z kamerą"
+      }
+    },
+    "zoneSegment": {
+      "messages": {
+        "deleted": "Strefa została usunięta",
+        "notDeleted": "Strefa nie została usunięta",
+        "select": "Wybierz strefę",
+        "saved": "Strefa została zapisana",
+        "notSaved": "Strefa nie została zapisana. Spróbuj ponownie.",
+        "overlap": "Strefy nie mogą się nakładać",
+        "selectWorkplace": "Wybierz miejsce pracy",
+        "duplicateName": "Nazwy stref nie mogą się powtarzać"
+      },
+      "notConnected": "Nie podłączona do kamery. Sprawdź połączenie na zakładce „Kamera”.",
+      "namePlaceholder": "Wprowadź nazwę strefy",
+      "select": "Wybierz lub wprowadź",
+      "selectAreas": "Wybierz jedną lub więcej obszarów z lewej strony",
+      "add": "Dodaj strefę"
+    }
+  },
+  "timespans":{
+    "inProcess": "W toku",
+    "done": "Zrobione",
+    "notFound":
+    {
+      "inProcess": "Brak bieżących zadań!",
+      "done": "Brak ukończonych zadań!"
+    }
+  }
+}

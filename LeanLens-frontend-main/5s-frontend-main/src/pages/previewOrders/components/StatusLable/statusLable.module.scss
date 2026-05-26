@@ -1,0 +1,71 @@
+@import 'src/styles/fonts';
+
+@mixin label {
+  display: flex;
+  align-items: center;
+}
+
+@mixin contained {
+  height: 24px;
+  padding: 0 10px;
+  border-radius: 20px;
+  user-select: none;
+}
+
+.contained {
+  &_error {
+    @include contained;
+    @include label;
+    background-color: var(--Orange);
+    color: var(--White);
+    .type {
+      @include caption;
+    }
+  }
+  &_completed {
+    @include contained;
+    @include label;
+    background-color: var(--Green);
+    color: var(--White);
+    .type {
+      @include caption;
+    }
+  }
+  &_undefined {
+    @include contained;
+    @include label;
+    background-color: var(--LowEmphasis);
+    color: var(--White);
+    .type {
+      @include caption;
+    }
+  }
+}
+
+.text {
+  &_error {
+    @include label;
+    color: var(--Orange);
+    .type {
+      @include title;
+    }
+  }
+  &_completed {
+    @include label;
+    color: var(--Green);
+    .type {
+      @include title;
+    }
+  }
+  &_undefined {
+    @include label;
+    color: var(--LowEmphasis);
+    .type {
+      @include title;
+    }
+  }
+}
+
+.icon {
+  margin-right: 6px;
+}

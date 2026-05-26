@@ -1,0 +1,30 @@
+.error {
+  border: 1px solid var(--StockRed);
+  border-radius: 5px;
+}
+
+ion-item:hover {
+    --ion-item-background: #f8f8f8;
+}
+
+.footer {
+  margin-top: .2rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: .9rem;
+  font-weight: 300;
+}
+
+.errorMessage {
+  color: var(--Red);
+}
+
+.disabled {
+  opacity: 0.6;
+  pointer-events: none; 
+}
+
+  
+  

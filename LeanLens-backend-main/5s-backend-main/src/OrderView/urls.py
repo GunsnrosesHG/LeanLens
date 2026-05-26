@@ -1,0 +1,26 @@
+from django.urls import path, include
+
+from rest_framework.routers import DefaultRouter
+
+from .views import (
+    GetAllProductAPIView,
+    GetOrderDataByZlecenieAPIView,
+    OperationNameApiView,
+    CreateConnectionAPIView,
+    GetConnectionStatusAPIView,
+    DeleteConnectionAPIView,
+    IndexOperationsView,
+)
+
+router = DefaultRouter()
+router.register(r"index_stanowisko", IndexOperationsView, basename="index_stanowisko")
+
+urlpatterns = [
+    path("by-order/<str:zlecenie_id>/", GetOrderDataByZlecenieAPIView.as_view(), name="get-orders-by-id"),
+    path("all-orders/", GetAllProductAPIView.as_view(), name="get-all-orders"),
+    path("get-operations/", OperationNameApiView.as_view(), name="get-operations-name"),
+    path('create-connection/', CreateConnectionAPIView.as_view(), name='create-connection'),
+    path("get-connections/", GetConnectionStatusAPIView.as_view(), name="get-list-of-all-database-connections"),
+    path("delete-connection/<int:id>/", DeleteConnectionAPIView.as_view(), name="delete-connection"),
+    path("", include(router.urls)),
+]

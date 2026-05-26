@@ -1,0 +1,34 @@
+@import 'src/styles/media.scss';
+@import 'src/styles/fonts.scss';
+
+.wrapper {
+  padding: 25px 0 25px 0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  color: var(--HightEmphasis);
+  margin-bottom: 10px;
+  &_title {
+    @include h2;
+  }
+  &_buttons {
+    display: flex;
+    gap: 58px;
+  }
+}
+
+.desc {
+  @include body1;
+  &_title {
+    @include body1;
+    color: var(--MediumEmphasis);
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

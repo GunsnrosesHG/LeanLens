@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front
+  labels:
+    deployment: front
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      pod: front
+  template:
+    metadata:
+      labels:
+        pod: front
+    spec:
+      containers:
+        - name: front
+          image: 5scontrol/5scontrol_front:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+              hostPort: 3000
+              protocol: TCP
+          env:
+            - name: REACT_APP_NGROK
+              value: https://grand-alien-apparently.ngrok-free.app/
+      nodeSelector:
+        specialnode: "main"
+      restartPolicy: Always

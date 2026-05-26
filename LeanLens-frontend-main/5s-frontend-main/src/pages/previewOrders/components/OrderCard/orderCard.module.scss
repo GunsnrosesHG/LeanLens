@@ -1,0 +1,71 @@
+@import 'src/styles/fonts';
+
+.cover {
+  padding: 0;
+}
+
+.header {
+  padding: 10px;
+  border-bottom: 1px solid var(--Gray88);
+  background-color: var(--White);
+
+  .titleWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    .titleContent {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 5px;
+      margin-bottom: 20px;
+
+      .title {
+        @include h3;
+        color: var(--HightEmphasis);
+      }
+    }
+
+    .orderDate {
+      @include h4;
+      color: var(--HightEmphasis);
+    }
+  }
+}
+
+.subtitle {
+  @include body2;
+  color: var(--HightEmphasis);
+
+  .customer {
+    font-weight: 500;
+  }
+}
+
+.list {
+  height: calc(100vh - 260px);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 20px;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  margin-right: 7px;
+  overflow-y: scroll;
+}
+
+.list::-webkit-scrollbar {
+  width: 8px;
+  background-color: inherit;
+}
+
+.list::-webkit-scrollbar-thumb {
+  background: var(--Gray88);
+  border-radius: 20px;
+}
+
+.list::-webkit-scrollbar-track {
+  background-color: inherit;
+}
