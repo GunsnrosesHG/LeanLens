@@ -1,0 +1,7 @@
+# Artefacts locaux
+.datasets/
+runs/
+__pycache__/
+*.pyc
+.ultralytics/
+venv/

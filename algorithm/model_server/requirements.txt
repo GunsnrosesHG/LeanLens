@@ -1,0 +1,6 @@
+flask>=3.0
+ultralytics>=8.3.0
+# opencv 4.x (la 5.0 casse l'API attendue par ultralytics/serveur)
+opencv-python-headless>=4.8,<5
+numpy>=1.24
+requests>=2.28

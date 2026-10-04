@@ -1,0 +1,334 @@
+# =============================================================================
+# LeanLens PFE — Plateforme complète (Windows / Docker Desktop)
+# Rebrand -> LeanLens : images amont retaguées leanlens/*, conteneurs,
+# base de données et chemins de volumes renommés. Les images amont contiennent
+# encore l'ancienne marque à l'intérieur ; nginx la réécrit à la volée
+# (sub_filter, cf. nginx/default.conf) pour un UI 100 % LeanLens à l'écran.
+#
+# NB : les CLÉS de services (django, db, fake-camera…) restent des noms courts :
+# elles servent de noms DNS internes (camera_url, PG_DSN, link_reports…).
+# Les noms commerciaux vivent dans container_name (leanlens-*).
+# =============================================================================
+name: leanlens
+
+services:
+  # ---------------- Plateforme LeanLens (images amont retaguées) ----------------
+  django:
+    # PFE : image reconstruite localement (fork LeanLens du backend amont).
+    # Ajouts P2 : endpoint toggle-process/, fix FK erp_5s (suppression de
+    # comptes), SEND_ACTIVATION_EMAIL=False (déploiement sans SMTP).
+    build: ./LeanLens-backend-main/backend-main
+    image: leanlens/django:latest
+    container_name: leanlens-django
+    restart: always
+    environment:
+      SECRET_KEY: 'pfe-leanlens-secret-key-32bytes!'
+      SERVER_URL: 'http://host.docker.internal'
+      DEBUG: 'False'
+      LICENSE_ACTIVE: 'False'
+      DB_ENGINE: 'django.db.backends.postgresql'
+      DB_NAME: 'leanlens'
+      DB_USER: 'leanlens'
+      DB_PASSWORD: 'leanlens-pfe'
+      DB_HOST: db
+      DB_PORT: '5432'
+      ONVIF_SERVICE_URL: onvif
+      ONVIFFINDER_SERVICE_URL: host.docker.internal
+      REDIS_HOST: redis
+      ALGORITHMS_CONTROLLER_SERVICE_URL: algorithms-controller
+      DJANGO_SERVICE_URL: django
+      EMULATE_DB: 'True'
+      NGROK_URL: 'http://localhost/'
+      TEST_DB_NAME: 'test_database'
+      TEST_DB_PORT: '5433'
+      CORS_ORIGIN_WHITELIST: 'http://localhost:3000'
+      CSRF_TRUSTED_ORIGINS: 'http://localhost:3000'
+    ports:
+      - '8000:8000'
+    tty: true
+    volumes:
+      # bootstrap base fraîche (upstream fake les migrations Mailer -> crash
+      # sur une base neuve) : cf. docs/bootstrap_pfe_fresh_db.py
+      - ./docs:/bootstrap_docs:ro
+      - ./volumes/images:/usr/src/app/images
+      - ./volumes/videos:/usr/src/app/videos
+      - ./volumes/database:/usr/src/app/database
+      - ./volumes/log:/usr/src/app/log
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    depends_on:
+      - db
+      - redis
+    networks:
+      - leanlens
+
+  db:
+    image: postgres:15
+    container_name: leanlens-db
+    environment:
+      POSTGRES_USER: leanlens
+      POSTGRES_PASSWORD: leanlens-pfe
+      POSTGRES_DB: leanlens
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data/
+    networks:
+      - leanlens
+
+  redis:
+    image: redis
+    container_name: leanlens-redis
+    command: redis-server --maxmemory-policy volatile-ttl
+    ports:
+      - '6379:6379'
+    networks:
+      - leanlens
+
+  # Bootstrap idempotent : auto-répare la base à CHAQUE `up -d`
+  # (migrations auto-réparatrices, admin, algo PFE, caméra démo + lien).
+  pfe-bootstrap:
+    image: leanlens/django:latest
+    container_name: leanlens-bootstrap
+    restart: "no"
+    environment:
+      SECRET_KEY: 'pfe-leanlens-secret-key-32bytes!'
+      DEBUG: 'False'
+      LICENSE_ACTIVE: 'False'
+      DB_ENGINE: 'django.db.backends.postgresql'
+      DB_NAME: 'leanlens'
+      DB_USER: 'leanlens'
+      DB_PASSWORD: 'leanlens-pfe'
+      DB_HOST: db
+      DB_PORT: '5432'
+      ONVIF_SERVICE_URL: onvif
+      ONVIFFINDER_SERVICE_URL: host.docker.internal
+      REDIS_HOST: redis
+      ALGORITHMS_CONTROLLER_SERVICE_URL: algorithms-controller
+      DJANGO_SERVICE_URL: django
+      EMULATE_DB: 'True'
+      NGROK_URL: 'http://localhost/'
+      TEST_DB_NAME: 'test_database'
+      TEST_DB_PORT: '5433'
+      CORS_ORIGIN_WHITELIST: 'http://localhost:3000'
+      CSRF_TRUSTED_ORIGINS: 'http://localhost:3000'
+      PYTHONPATH: '/usr/src/app'
+    volumes:
+      - ./docs:/bootstrap_docs:ro
+    depends_on:
+      - db
+    networks:
+      - leanlens
+    command:
+      - sh
+      - -c
+      - 'for i in $$(seq 1 30); do python /bootstrap_docs/bootstrap_pfe_fresh_db.py && break; echo "bootstrap retry $$i"; sleep 5; done'
+
+  onvif:
+    image: leanlens/onvif:latest
+    container_name: leanlens-onvif
+    restart: always
+    ports:
+      - '3456:3456'
+    environment:
+      DJANGO_SERVICE_URL: 'django'
+    volumes:
+      - ./volumes/images:/var/www/leanlens/images
+      - ./volumes/videos:/var/www/leanlens/videos
+      - ./volumes/database:/var/www/leanlens/database
+      # l'image amont a le chemin /var/www/5scontrol/code en dur (SQLite onvif) :
+      # on monte les mêmes dossiers sur ce chemin interne pour la compatibilité
+      - ./volumes/images:/var/www/5scontrol/images
+      - ./volumes/videos:/var/www/5scontrol/videos
+      - ./volumes/database:/var/www/5scontrol/database
+    depends_on:
+      - django
+    tty: true
+    networks:
+      - leanlens
+
+  algorithms-controller:
+    image: leanlens/algorithms-controller:latest
+    restart: always
+    privileged: true
+    container_name: leanlens-algorithms-controller
+    tty: true
+    ports:
+      - '3333:3333'
+    environment:
+      ALGORITMS_SOURCE_IMAGES_DIST: '/usr/src/app/images'
+      ALGORITMS_TARGET_IMAGES_DIST: '/var/www/leanlens/images'
+      ONVIF_SERVICE_URL: onvif
+      DJANGO_SERVICE_URL: django
+      NETWORK: 'leanlens'
+    depends_on:
+      - django
+    volumes:
+      - ./volumes/images:/usr/src/app/images
+      - ./volumes/images:/var/www/leanlens/images
+      - /var/run/docker.sock:/var/run/docker.sock
+    stdin_open: true
+    networks:
+      - leanlens
+
+  # LeanLens v2 frontend (shadcn-admin rebuild) — served static by its own
+  # nginx; the main proxy routes / to it. Old `front` (CRA) is kept as a
+  # fallback: flip nginx's `location /` back to http://front:3000 to revert.
+  front-v2:
+    build: ./frontend
+    container_name: leanlens-front-v2
+    restart: unless-stopped
+    depends_on:
+      - django
+    networks:
+      - leanlens
+
+  front:
+    image: leanlens/front:latest
+    container_name: leanlens-front
+    restart: always
+    # pas de port hôte : tout le trafic UI passe par nginx (:80) qui applique
+    # la réécriture de marque (le dev server brut ne doit pas être joignable)
+    depends_on:
+      - django
+    environment:
+      REACT_APP_NGROK: 'http://localhost/'
+    volumes:
+      # Rebrand LeanLens : remplacement des logos amont (mêmes dimensions/chemins
+      # -> zéro changement de code, le dev server recompile à chaud) + icônes PWA
+      - ./brand/5scontrol.svg:/app/src/assets/svg/5scontrol.svg:ro
+      - ./brand/5S.svg:/app/src/assets/svg/5S.svg:ro
+      - ./brand/logo192.png:/app/public/logo192.png:ro
+      - ./brand/logo512.png:/app/public/logo512.png:ro
+      - ./brand/favicon.ico:/app/public/favicon.ico:ro
+    networks:
+      - leanlens
+
+  onviffinder:
+    image: leanlens/onviffinder:latest
+    container_name: leanlens-onviffinder
+    profiles: ["extras"]   # network_mode host : peu utile en local Windows
+    network_mode: 'host'
+
+  # ---------------- nginx (webserver) ----------------
+  nginx:
+    container_name: leanlens-webserver
+    image: nginx:latest
+    restart: always
+    command: ['nginx', '-g', 'daemon off;']
+    ports:
+      - '80:80'
+    volumes:
+      - ./volumes/images:/usr/src/app/images
+      - ./volumes/videos:/usr/src/app/videos
+      - ./nginx:/etc/nginx/conf.d
+    depends_on:
+      - front
+      - django
+    networks:
+      - leanlens
+
+  # ---------------- Pipeline PFE ----------------
+  leanlens-model:
+    build: ./algorithm/model_server
+    container_name: leanlens-model
+    restart: unless-stopped
+    environment:
+      MODEL_WEIGHTS: '/models/best.pt'
+      MODEL_CONF: '0.25'
+      MODEL_NMS_FREE: '1'
+    ports:
+      - '5000:5000'
+    volumes:
+      - ./models:/models:ro
+    deploy:
+      resources:
+        limits:
+          memory: 4g
+    networks:
+      - leanlens
+
+  # Lancement MANUEL (démo) — en prod, algorithms-controller fait le même appel
+  # avec les mêmes variables d'environnement (voir algorithm/README.md).
+  leanlens-algo:
+    build: ./algorithm
+    container_name: leanlens-algo
+    profiles: ["manual"]
+    environment:
+      # Démo PFE : caméra factice HTTP (aucun RTSP — la source boucle en snapshot).
+      # Pour une vraie caméra : camera_url=http://onvif:3456/onvif-http/snapshot?camera_ip=<ip>
+      # et camera_stream_url=rtsp://user:pass@<ip>/h264_stream
+      camera_url: 'http://fake-camera:6001/snapshot'
+      server_url: 'leanlens-model'
+      link_reports: 'http://django:8000/api/reports/report-with-photos/'
+      folder: 'images/192.168.1.64'
+      camera_ip: '192.168.1.64'
+      algorithm_name: 'smartphone_idle_control'
+      MODEL_SERVER_URL: 'http://leanlens-model:5000'
+      IMAGES_ROOT: '/var/www/leanlens/images'
+      # Démo : photos réelles du split test -> seuils abaissés pour la démo
+      # (transparence : en prod, 0.84, cf. calibration.json)
+      CONF_THRESHOLD: '0.4'
+      CONF_PHONE: '0.4'
+      # Plancher « track » : une détection sous 0.35 n'ouvre ni ne maintient de
+      # track — aucune machine à états ne peut se déclencher sur du bruit.
+      CONF_TRACK: '0.35'
+      IDLE_SECONDS: '30'
+      BLUR_FACES: '1'
+      # Affectation plateforme (P2) : le worker interroge get-process/<ip>/ —
+      # si l'algo est désactivé pour la caméra dans l'UI (toggle-process/), la
+      # détection est suspendue. Compte de service JWT dédié (PAS le compte admin).
+      ASSIGN_SERVICE_USER: 'leanlens-worker'
+      ASSIGN_SERVICE_PASSWORD: 'WorkerPFE-2026'
+      ASSIGN_POLL_S: '5'
+    volumes:
+      - ./volumes/images:/var/www/leanlens/images
+    depends_on:
+      - leanlens-model
+    networks:
+      - leanlens
+
+  # ---------------- Démo PFE (caméra factice + pilote) ----------------
+  # Scènes = PHOTOS RÉELLES du split test (les dessins synthétiques sont hors
+  # distribution pour le modèle -> 0 détection). Choix mesuré sur le modèle :
+  # cf. demo/pick_scenes.py. Les montages lisent le split test conservé.
+  fake-camera:
+    build: ./demo/fake_camera
+    container_name: leanlens-fake-camera
+    restart: unless-stopped
+    environment:
+      PHONE_IMG: 'coco_000000292488.jpg'   # person_phone @ 0.64 + smartphone @ 0.97 -> rapport phone
+      IDLE_IMG: 'coco_000000545100.jpg'    # 1 seule détection person @ 0.80, 0 smartphone -> 1 alerte idle propre
+      WORKING_IMG: 'coco_000000411754.jpg' # 0 détection, ambiance bureau (pause travail normal)
+    volumes:
+      - ./training/data/images/test:/scenes:ro
+    ports:
+      - '6001:6001'
+    networks:
+      - leanlens
+
+  demo-driver:
+    build:
+      context: ./demo
+      dockerfile: Dockerfile.app
+    container_name: leanlens-demo-driver
+    restart: unless-stopped
+    environment:
+      CAMERA_URL: 'http://fake-camera:6001'
+      PG_DSN: 'host=db port=5432 dbname=leanlens user=leanlens password=leanlens-pfe'
+    volumes:
+      - ./volumes/images:/var/www/leanlens/images
+    ports:
+      - '6002:6002'
+    depends_on:
+      - fake-camera
+      - db
+    networks:
+      - leanlens
+
+networks:
+  leanlens:
+    name: 'leanlens'
+
+volumes:
+  pgdata:

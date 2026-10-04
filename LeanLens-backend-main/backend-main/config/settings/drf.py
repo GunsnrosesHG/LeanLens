@@ -31,7 +31,10 @@ else:
 DJOSER = {
     "PASSWORD_RESET_CONFIRM_URL": "#/password/reset/confirm/{uid}/{token}",
     "ACTIVATION_URL": "#/activate/{uid}/{token}",
-    "SEND_ACTIVATION_EMAIL": True,
+    # PFE (LeanLens) : déploiement sans SMTP — l'envoi d'un mail d'activation
+    # plantait en 500 après création (utilisateur créé inactif, impossible de
+    # se connecter). False = comptes actifs immédiatement à la création.
+    "SEND_ACTIVATION_EMAIL": False,
     "SERIALIZERS": {},
 }
 

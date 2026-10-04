@@ -41,6 +41,11 @@ class LicenseSerializer(serializers.Serializer):
 class CompanySerializer(serializers.ModelSerializer):
     logo = serializers.ImageField(required=False, allow_null=True)
     file = serializers.FileField(required=False, allow_null=True)
+    # PFE (LeanLens) : sans champ explicite, DRF mappe le CountryField de
+    # django-countries en ChoiceField qui renvoie l'objet Country non
+    # sérialisable -> 500 "Object of type Country is not JSON serializable"
+    # sur GET/POST de /company/company/ dès qu'une ligne existe.
+    country = serializers.CharField(required=False, allow_null=True, allow_blank=True)
 
     class Meta:
         model = Company

@@ -1,0 +1,8 @@
+<svg width="134" height="80" viewBox="0 0 134 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- LeanLens — remplacement du glyphe de connexion (mêmes dimensions) -->
+  <g>
+    <circle cx="67" cy="40" r="30" stroke="#2F7BFF" stroke-width="8" fill="none"/>
+    <ellipse cx="67" cy="40" rx="14.5" ry="9" fill="#2F7BFF" transform="rotate(-24 67 40)"/>
+    <circle cx="82" cy="22" r="5.5" fill="#8FBAFF"/>
+  </g>
+</svg>

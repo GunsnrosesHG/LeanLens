@@ -45,8 +45,22 @@ def DeleteCamera(camera_instance: Camera) -> Dict[str, Any]:
     ] = CameraAlgorithm.objects.filter(camera=camera_instance)
 
     for camera_algorithm in query_list_cameraalgorithms:
-        pid: int = camera_algorithm.process_id
-        stop_and_update_algorithm(pid)
+        try:
+            pid: int = camera_algorithm.process_id
+            stop_and_update_algorithm(pid)
+        except Exception:  # noqa: BLE001 — PFE : le controller algorithms est hors
+            # service dans ce déploiement (crash-loop amont) et process_id vaut 0
+            # pour les liens gérés par toggle-process. La suppression ne doit pas
+            # échouer pour autant : le worker leanlens-algo constate la disparition
+            # du lien à son prochain poll get-process et suspend la détection seul.
+            logger.warning(
+                "Impossible d'arrêter le process %s via le controller — lien supprimé quand même",
+                camera_algorithm.process_id,
+                exc_info=True,
+            )
+
+    # Les liens restants (arrêts en échec) sont nettoyés explicitement.
+    CameraAlgorithm.objects.filter(camera=camera_instance).delete()
 
     camera_id: int = camera_instance.id
     camera_instance.delete()

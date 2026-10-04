@@ -37,3 +37,44 @@ build/
 # Logs and local data
 *.log
 logs/
+
+# Ruflo local secrets and runtime data
+.env.local
+.env.*.local
+.claude-flow/data/
+.claude-flow/logs/
+.claude-flow/sessions/
+
+# jeton JWT transitoire des vérifications curl (jamais committer)
+.jwt-token
+
+# Données runtime Docker (bind mounts : DB, images, logs, vidéos)
+volumes/
+
+# Archive d'audit (se régénère — voir docs/RUNNING.md)
+*.rar
+
+# Outils d'agents locaux (pas partie du projet)
+.claude/
+.claude-flow/
+.swarm/
+.freebuff/
+.freebuff-preview/
+CLAUDE.md
+.mcp.json
+claude-flow.config.json
+
+# Frontend : caches de build/tests
+frontend/.tanstack/
+frontend/.vitest-attachments/
+
+# Training : artefacts régénérables (dataset = download_dataset.py, poids de base = ultralytics)
+training/data/labels/*.cache
+training/yolo26n.pt
+training/runs/
+
+# Poids dupliqués (source de vérité = models/best.pt, monté en volume par compose)
+algorithm/model_server/models/*.pt
+
+# Preuve e2e régénérée à chaque run de test
+algorithm/.e2e_images/

@@ -1,0 +1,14 @@
+<svg width="110" height="22" viewBox="0 0 110 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- LeanLens wordmark — drop-in replacement (mêmes dimensions que l'original) -->
+  <g clip-path="url(#clip_leanlens)">
+    <circle cx="11" cy="11" r="8.4" stroke="#1E5EFF" stroke-width="2.4" fill="none"/>
+    <ellipse cx="11" cy="11" rx="4.1" ry="2.5" fill="#1E5EFF" transform="rotate(-24 11 11)"/>
+    <circle cx="15.2" cy="6.4" r="1.5" fill="#6FA0FF"/>
+    <text x="26" y="16.4" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="13.5" font-weight="600" letter-spacing="0.2" fill="#1E5EFF">LeanLens</text>
+  </g>
+  <defs>
+    <clipPath id="clip_leanlens">
+      <rect width="110" height="22" fill="none"/>
+    </clipPath>
+  </defs>
+</svg>

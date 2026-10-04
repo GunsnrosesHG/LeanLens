@@ -147,7 +147,11 @@ class OrderOperationTimespan(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     order_operation = models.ForeignKey('OrderOperations', on_delete=models.CASCADE)
-    employee = models.ForeignKey(CustomUser, null=True, on_delete=models.SET_NULL)
+    # PFE : les tables ERP sont non gérées (managed=False, schéma 'erp' absent
+    # du déploiement LeanLens). on_delete=DO_NOTHING évite que le collector de
+    # Django interroge cette table inexistante à la suppression d'un compte
+    # utilisateur (sinon : 500 UndefinedTable sur DELETE /api/auth/users/<id>/).
+    employee = models.ForeignKey(CustomUser, null=True, on_delete=models.DO_NOTHING)
     workplace_number = models.IntegerField(null=True, blank=True)
 
     def __str__(self):

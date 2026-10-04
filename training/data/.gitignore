@@ -1,0 +1,11 @@
+# Dataset volumineux : hors git, structure conservée via .gitkeep
+images/*/*
+labels/*/*
+!images/*/.gitkeep
+!labels/*/.gitkeep
+
+# Les 3 photos de scène de la démo PFE (montées par fake-camera) doivent
+# fonctionner dès le clone — on les versionne (≈ 320 Ko au total).
+!images/test/coco_000000292488.jpg
+!images/test/coco_000000545100.jpg
+!images/test/coco_000000411754.jpg

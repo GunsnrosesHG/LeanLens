@@ -1,0 +1,21 @@
+{
+  "settings_version": "0.0.6",
+  "datasets_dir": "C:\\Users\\Hedi\\Downloads\\LeanLens\\training\\datasets",
+  "weights_dir": "weights",
+  "runs_dir": "runs",
+  "uuid": "1b3bd22ec908fca76a90371a0c0f2178e163b49c2a767989a3cd0d446ee66dff",
+  "sync": true,
+  "api_key": "",
+  "openai_api_key": "",
+  "clearml": true,
+  "comet": true,
+  "dvc": true,
+  "hub": true,
+  "mlflow": true,
+  "neptune": true,
+  "raytune": true,
+  "tensorboard": false,
+  "wandb": false,
+  "vscode_msg": true,
+  "openvino_msg": true
+}

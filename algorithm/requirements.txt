@@ -1,0 +1,6 @@
+# opencv 4.x requis : la 5.0 déplace CascadeClassifier hors de cv2 racine
+opencv-python-headless>=4.8,<5
+numpy>=1.24
+requests>=2.28
+# ultralytics uniquement pour le mode USE_LOCAL_MODEL / tracking
+ultralytics>=8.3.0

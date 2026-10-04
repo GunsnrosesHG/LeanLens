@@ -1,0 +1,30 @@
+# LeanLens PFE — dataset config (format Ultralytics)
+# 3 classes cibles :
+#   0 = person_phone : personne utilisant un smartphone (main + regard écran)
+#   1 = smartphone   : objet seul (posé ou tenu)
+#   2 = person_idle  : personne immobile / tête baissée pendant X s
+#
+# NB : "person_idle" est intrinsèquement temporel. Deux approches défendables
+# en mémoire : (a) frame-level (boîte annotée sur les frames "idle"),
+# (b) logique de tracking sur classe "person" uniquement (recommandée en prod).
+path: data_root  # remplacé automatiquement par le chemin absolu via leanlens_common.py
+train: images/train
+val: images/val
+test: images/test
+
+names:
+  0: person_phone
+  1: smartphone
+  2: person_idle
+
+# Augmentations (appliquées côté Ultralytics, ajustables ici)
+hsv_h: 0.015
+hsv_s: 0.7
+hsv_v: 0.4
+degrees: 5.0
+translate: 0.1
+scale: 0.5
+fliplr: 0.5
+mosaic: 1.0
+mixup: 0.1
+erasing: 0.0

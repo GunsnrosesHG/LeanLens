@@ -68,6 +68,9 @@ async-timeout==4.0.2
 # redis packages
 redis==4.5.4
 django-redis==5.2.0
+# PFE : python-dateutil importé par src/CameraAlgorithms (dateutil.parser)
+# et absent de la liste amont (dep transitive de celery non installée par pip)
+python-dateutil==2.8.2
 # celery packages
 django-crontab==0.7.1
 schedule==1.2.0

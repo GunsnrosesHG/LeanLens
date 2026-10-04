@@ -1,9 +1,16 @@
+import logging
+
+from django.core.validators import validate_ipv46_address
+from django.core.exceptions import ValidationError as DjangoValidationError
+
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.exceptions import NotFound
+
+logger = logging.getLogger(__name__)
 
 from src.Core.paginators import NoPagination
 from src.Core.permissions import IsStaffPermission, IsSuperuserPermission
@@ -30,6 +37,51 @@ class CameraAPIView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     pagination_class = NoPagination
     queryset = Camera.objects.all().order_by('id')
+
+    def post(self, request, *args, **kwargs):
+        """PFE: create a camera row directly.
+
+        The upstream creation path goes through the onvif/cam-stream services
+        (`sender('add_camera')` -> :3010), which are not deployed/usable here —
+        so the v2 UI writes the Camera row itself. The leanlens-algo worker
+        picks cameras up through get-process polling; detection only starts
+        once an algorithm link exists (page Algorithmes).
+        Accepts {"ip" | "id", "name"?, "username"?, "password"?}.
+        """
+        data = request.data if isinstance(request.data, dict) else {}
+        ip = data.get("ip") or data.get("id")
+        if not ip:
+            return Response(
+                {"ip": ["This field is required."]},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        try:
+            validate_ipv46_address(str(ip))
+        except (DjangoValidationError, ValueError):
+            return Response(
+                {"ip": ["Enter a valid IP address."]},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        username = str(data.get("username") or "")[:100]
+        password = str(data.get("password") or "")[:100]
+        name = str(data.get("name") or "")[:100] or str(ip)
+
+        camera, created = Camera.objects.get_or_create(
+            id=str(ip),
+            defaults={
+                "name": name,
+                "username": username,
+                "password": password,
+                "is_active": True,
+            },
+        )
+        if not created:
+            return Response(
+                {"detail": "Camera already exists.", "id": camera.id},
+                status=status.HTTP_409_CONFLICT,
+            )
+        logger.warning("Camera [%s] created via v2 UI", camera.id)
+        return Response(CameraModelSerializer(camera).data, status=status.HTTP_201_CREATED)
 
 
 class AlgorithmDetailApiView(ModelViewSet):
@@ -176,6 +228,75 @@ class UploadAlgorithmView(APIView):
         uploading_algorithm.apply_async((algorithm.id, algorithm.image_name))
 
         return Response({"message": "File upload started"}, status=status.HTTP_202_ACCEPTED)
+
+
+class CameraAlgorithmToggleApiView(APIView):
+    """PFE (LeanLens) : active/désactive un algorithme pour une caméra.
+
+    Le endpoint amont `create-process/` pilote le algorithms-controller
+    (spawn de conteneurs Docker par pid). Le déploiement PFE exécute la
+    détection dans le worker autonome `leanlens-algo` (env-driven), et le
+    controller amont est hors service : ce endpoint synchronise donc
+    directement l'affectation CameraAlgorithm (même sémantique que le
+    bootstrap de première installation), que le worker interroge via
+    GET get-process/<ip>/ pour suspendre/reprendre la détection.
+
+    POST {"camera": "<ip>", "algorithm": "<name>", "is_active": true|false}
+    """
+
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, format=None):
+        camera_ip = request.data.get("camera")
+        algorithm_name = request.data.get("algorithm")
+        is_active = bool(request.data.get("is_active", True))
+
+        if not camera_ip or not algorithm_name:
+            return Response(
+                {"error": "camera and algorithm are required"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        camera = Camera.objects.filter(id=camera_ip).first()
+        if camera is None:
+            return Response(
+                {"error": f"Camera {camera_ip} not found"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        algorithm = Algorithm.objects.filter(name=algorithm_name).first()
+        if algorithm is None:
+            return Response(
+                {"error": f"Algorithm {algorithm_name} not found"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        if is_active:
+            _, created = CameraAlgorithm.objects.get_or_create(
+                camera=camera,
+                algorithm=algorithm,
+                defaults={"process_id": 0, "zones": None, "is_active": True},
+            )
+            return Response(
+                {
+                    "status": True,
+                    "created": created,
+                    "message": f"{algorithm_name} enabled on {camera_ip}",
+                },
+                status=status.HTTP_200_OK,
+            )
+
+        deleted, _ = CameraAlgorithm.objects.filter(
+            camera=camera, algorithm=algorithm
+        ).delete()
+        return Response(
+            {
+                "status": True,
+                "deleted": deleted,
+                "message": f"{algorithm_name} disabled on {camera_ip}",
+            },
+            status=status.HTTP_200_OK,
+        )
 
 
 class CameraListView(generics.ListAPIView):
