@@ -7,6 +7,8 @@ platform with a live demo. It assumes nothing except Docker and Git.
   on Linux/macOS with Docker Engine + Compose v2.
 - First run: **~10–15 min** (image builds) + **~2 min** (image pulls + DB bootstrap).
 - Every command is run from the repository root.
+- Rehearsed from a **fresh clone** (every build context, Dockerfile, bind-mount
+  source, compose `config`, and service count in this guide re-verified).
 
 ---
 
@@ -91,6 +93,11 @@ docker compose -f docker-compose.pfe.yml build django        # or front-v2, lean
 ## 5. Start the platform
 
 ```bash
+# 0. Create the runtime volume directories (a fresh clone has none).
+#    Compose would create them itself, but on Linux it does so as root —
+#    pre-creating them keeps ownership with your user:
+mkdir -p volumes/images volumes/videos volumes/database volumes/log
+
 # 1. Everything except the algorithm worker (12 containers):
 docker compose -f docker-compose.pfe.yml up -d
 

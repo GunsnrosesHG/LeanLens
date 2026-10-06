@@ -384,3 +384,36 @@ marque au proxy : le branding est dans le code source.
 - Stack restaurée après redémarrage Docker Desktop (django recréé après db/
   redis, nginx reload — playbooks déjà rodés).
 
+---
+
+## 9. Post-livraison — hygiène du dépôt et répétition à blanc (6 oct.)
+
+**Wave 1 du plan de nettoyage exécutée** (`docs/CLEANUP_PLAN.md`) : suppression
+des 4 transcriptions de build (`.build-all.log`, `algo_build2.log`,
+`compose_pull.log`, `docker_build.log`), des 5 archives sources amont
+`LeanLens-*-main.zip` (30 Mo — les arbres extraits sont, eux, versionnés), des
+caches front (`frontend/.vitest-attachments/`, `frontend/.tanstack/`) et des
+caches Python (`__pycache__/`, `.pytest_cache/`). **≈ 29 Mo libérés**, sans
+aucune conséquence sur le dépôt ni sur la plateforme : toutes ces cibles étaient
+ignorées par git (vérifié par `git check-ignore` avant suppression), et le plan
+en conserve les chemins de restauration. `docker image prune` reste à faire
+(daemon Docker arrêté au moment du nettoyage).
+
+**Répétition à blanc du guide d'installation** (`docs/RUNNING.md`) : clonage
+réel de `github.com/GunsnrosesHG/LeanLens` dans un répertoire temporaire
+(HEAD `116e7ab`) puis vérification systématique de chaque affirmation du guide —
+les 6 contextes de build et leurs 6 Dockerfiles sont présents, les sources des
+montages liants (`nginx/`, `models/`, `docs/`, `brand/`, `training/data/images/
+test/`) aussi, `docker compose config` est valide, `config --services` renvoie
+**12 services** sans profil et **13** avec `leanlens-algo` (14 avec
+`onviffinder`), et les tags `leanlens/*` des 4 images amont correspondent
+exactement au §3. **Un manque réel détecté et comblé** : un clone frais ne
+contient pas les répertoires `volumes/` alors que quatre d'entre eux sont montés
+en liant — `mkdir -p volumes/images volumes/videos volumes/database volumes/log`
+a été ajouté comme étape 0 du §5 (Compose les créerait seul, mais en `root` sous
+Linux, ce qui peut surprendre).
+
+**Limite assumée** : la répétition est *statique* (Docker Desktop était arrêté).
+Le build et le démarrage réels ont été validés sur ce même commit lors de la
+livraison, mais n'ont pas été rejoués depuis le clone — à faire lors de la
+prochaine session avec Docker actif.
