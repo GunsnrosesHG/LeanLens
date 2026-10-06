@@ -396,8 +396,10 @@ caches front (`frontend/.vitest-attachments/`, `frontend/.tanstack/`) et des
 caches Python (`__pycache__/`, `.pytest_cache/`). **≈ 29 Mo libérés**, sans
 aucune conséquence sur le dépôt ni sur la plateforme : toutes ces cibles étaient
 ignorées par git (vérifié par `git check-ignore` avant suppression), et le plan
-en conserve les chemins de restauration. `docker image prune` reste à faire
-(daemon Docker arrêté au moment du nettoyage).
+en conserve les chemins de restauration. `docker image prune -f` a ensuite été
+exécuté pour de bon (Docker relancé pour la répétition live) : 1 image orpheline
+supprimée, **0 o réellement récupéré** — les 12 conteneurs en cours et toutes les
+images `leanlens/*` sont intacts. Wave 1 est donc intégralement terminée.
 
 **Répétition à blanc du guide d'installation** (`docs/RUNNING.md`) : clonage
 réel de `github.com/GunsnrosesHG/LeanLens` dans un répertoire temporaire
