@@ -413,7 +413,31 @@ en liant — `mkdir -p volumes/images volumes/videos volumes/database volumes/lo
 a été ajouté comme étape 0 du §5 (Compose les créerait seul, mais en `root` sous
 Linux, ce qui peut surprendre).
 
-**Limite assumée** : la répétition est *statique* (Docker Desktop était arrêté).
-Le build et le démarrage réels ont été validés sur ce même commit lors de la
-livraison, mais n'ont pas été rejoués depuis le clone — à faire lors de la
-prochaine session avec Docker actif.
+**Répétition live (Docker actif)** : les 13 conteneurs montent réellement —
+`docker ps -a` = **13 lignes**, porte d'entrée `http://localhost/` = **200**,
+`POST /api/auth/jwt/create/` renvoie un vrai JWT (205 caractères) et
+`GET /api/core/gdpr/status/` renvoie le JSON attendu
+(`reported:true, blur_active:true, blur_mode:"pixelate"`), qui passe de
+`stale:true` (valeur vieille de 46 h) à `stale:false, age_seconds:16` dès que
+le worker republie son heartbeat (cadence 60 s). Panneau démo :6002 = 200,
+`/health` du serveur de modèles = 200, admin Django = 302 (redirection login).
+
+**Deux défauts réels du guide détectés et corrigés :**
+
+1. Le §6 annonçait « 13 lignes » pour `docker ps`, qui n'en affiche que **12** —
+   un conteneur `Exited` (le bootstrap) n'apparaît jamais dans `docker ps`.
+   Corrigé en `docker ps -a` (13 lignes, bootstrap `Exited (0)` = succès).
+2. L'extraction du jeton utilisait `sed -E …` sans `-n`/`p` : API hors ligne, la
+   commande **recopiait la page d'erreur HTML** comme « jeton », et la commande
+   suivante échouait en **400 nginx** incompréhensible (au lieu d'un échec
+   clair). Corrigé en `sed -nE … p` (vide si pas de JSON) + garde
+   `[ -n "$TOKEN" ]` affichant « login FAILED — is the API up? see §12 ».
+   Les deux comportements (succès et échec) sont vérifiés.
+
+**Scénario rencontré, déjà couvert par le §12** : après un redémarrage de Docker
+Desktop, `db` et `redis` restent `Exited` (46 h) pendant que `django` est relancé —
+Django ne lie alors jamais `:8000`, donc nginx renvoie **502 sur l'API alors que
+`/` répond 200**. Le remède documenté (`up -d --force-recreate django && docker
+restart leanlens-webserver`) a été appliqué tel quel et a fonctionné ; la ligne
+correspondante du tableau §12 a été précisée (symptôme = échec du contrôle de
+connexion du §6).

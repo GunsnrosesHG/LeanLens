@@ -122,19 +122,25 @@ What happens automatically at `up -d`:
 ## 6. Verify (~30 seconds)
 
 ```bash
-# All containers up (13 lines; "Exited" bootstrap is normal):
-docker ps --format '{{.Names}}\t{{.Status}}'
+# All containers up. Use -a: the one-shot bootstrap shows "Exited (0)",
+# which IS success. 13 lines after step 2 (docker ps alone shows the 12 Up):
+docker ps -a --format '{{.Names}}\t{{.Status}}'
 
 # Front door answers:
 curl -s -o /dev/null -w "%{http_code}\n" http://localhost/            # 200
 
-# API answers (auth works end-to-end):
+# API answers (auth works end-to-end). `sed -n … p` yields EMPTY when the
+# response is not the JSON we expect, so the guard fails loudly — instead of
+# passing an HTML error page through as the "token" (which then surfaces as a
+# confusing nginx 400 on the next command).
 TOKEN=$(curl -s -X POST http://localhost/api/auth/jwt/create/ \
   -H 'Content-Type: application/json' \
   -d '{"username":"admin","password":"LeanLens2026"}' \
-  | sed -E 's/.*"access":"([^"]+)".*/\1/')
+  | sed -nE 's/.*"access":"([^"]+)".*/\1/p')
+[ -n "$TOKEN" ] && echo "login OK" || echo "login FAILED — is the API up? see §12"
 
-# Worker heartbeat / GDPR blur status (stale:true until the worker has reported):
+# Worker heartbeat / GDPR blur status. `stale:true` until the worker has
+# published (it does so every 60 s), so re-run this after a minute if needed:
 curl -s http://localhost/api/core/gdpr/status/ -H "Authorization: JWT $TOKEN"
 ```
 
@@ -281,7 +287,7 @@ fetched with `python training/download_dataset.py --source coco --max-images 400
 | Symptom | Cause | Fix |
 |---|---|---|
 | http://localhost → **502** after recreating the Django container | nginx cached the old container IP | `docker restart leanlens-webserver` |
-| Containers "Up" but UI dead after a Docker Desktop restart | Django booted before db/redis | `docker compose -f docker-compose.pfe.yml up -d --force-recreate django && docker restart leanlens-webserver` |
+| §6 **login check fails**: `/api/…` → **502** while `/` still returns 200 (typical after a Docker Desktop restart) | Django started while `db`/`redis` were still down, so it never bound `:8000` | `docker compose -f docker-compose.pfe.yml up -d --force-recreate django && docker restart leanlens-webserver` |
 | `leanlens-algorithms-controller` keeps restarting | known upstream crash-loop; platform bypasses it architecturally | ignore it — and **never** call `POST /create-process/` |
 | `GET /api/core/find_cameras/` → 500 | `onviffinder` (profile `extras`) not deployed on Windows | add cameras manually in the UI (graceful fallback) |
 | Worker doesn't react to the UI toggle | worker not running | `docker compose -f docker-compose.pfe.yml up -d leanlens-algo` |
